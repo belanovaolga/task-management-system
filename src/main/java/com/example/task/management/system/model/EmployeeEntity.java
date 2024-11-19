@@ -1,6 +1,6 @@
 package com.example.task.management.system.model;
 
-import com.example.task.management.system.model.enums.Role;
+import com_example_task_management_system_model.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +28,7 @@ public class EmployeeEntity implements UserDetails {
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private RoleEnum role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

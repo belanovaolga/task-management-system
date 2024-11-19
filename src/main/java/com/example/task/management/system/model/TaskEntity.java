@@ -1,7 +1,7 @@
 package com.example.task.management.system.model;
 
-import com.example.task.management.system.model.enums.Priority;
-import com.example.task.management.system.model.enums.Status;
+import com_example_task_management_system_model.PriorityEnum;
+import com_example_task_management_system_model.StatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,9 +24,9 @@ public class TaskEntity {
     private String header;
     private String description;
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private StatusEnum status;
     @Enumerated(EnumType.STRING)
-    private Priority priority;
+    private PriorityEnum priority;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CommentEntity> comments;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

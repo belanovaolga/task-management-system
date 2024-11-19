@@ -1,19 +1,17 @@
 package com.example.task.management.system.service;
 
-
-import com.example.task.management.system.model.request.ByEmployeeTaskRequest;
-import com.example.task.management.system.model.request.NewTaskRequest;
-import com.example.task.management.system.model.request.StatusUpdateRequest;
-import com.example.task.management.system.model.request.TaskUpdateRequest;
-import com.example.task.management.system.model.response.TaskResponse;
-import com.example.task.management.system.model.response.TasksListResponse;
+import com_example_task_management_system_model.NewTaskRequest;
+import com_example_task_management_system_model.StatusUpdateRequest;
+import com_example_task_management_system_model.TaskResponse;
+import com_example_task_management_system_model.TaskUpdateRequest;
+import com_example_task_management_system_model.TasksListResponse;
 
 public interface TaskService {
     TaskResponse createTask(NewTaskRequest newTaskRequest);
     TaskResponse updateTask(Long taskId, TaskUpdateRequest taskUpdateRequest);
     TaskResponse updateStatus(Long taskId, StatusUpdateRequest statusUpdateRequest);
     void deleteTask(Long taskId);
-    TasksListResponse findTasksByAuthor(ByEmployeeTaskRequest byEmployeeTaskRequest);
-    TasksListResponse findTasksByExecutor(ByEmployeeTaskRequest byEmployeeTaskRequest);
+    TasksListResponse findTasksByAuthor(Long authorId);
+    TasksListResponse findTasksByExecutor(Long executorId);
     TasksListResponse findAllTasks();
 }

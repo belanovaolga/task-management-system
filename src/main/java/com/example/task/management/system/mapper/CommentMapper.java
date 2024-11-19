@@ -1,8 +1,8 @@
 package com.example.task.management.system.mapper;
 
 import com.example.task.management.system.model.CommentEntity;
-import com.example.task.management.system.model.request.NewCommentRequest;
-import com.example.task.management.system.model.response.CommentResponse;
+import com_example_task_management_system_model.CommentResponse;
+import com_example_task_management_system_model.NewCommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,11 +18,12 @@ public class CommentMapper {
     }
 
     public CommentResponse toCommentResponse(CommentEntity commentEntity) {
-        return CommentResponse.builder()
-                .id(commentEntity.getId())
-                .text(commentEntity.getText())
-                .taskId(commentEntity.getTask().getId())
-                .author(employeeMapper.toEmployeeResponse(commentEntity.getAuthor()))
-                .build();
+        CommentResponse commentResponse = new CommentResponse();
+        commentResponse.setId(commentEntity.getId());
+        commentResponse.setText(commentEntity.getText());
+        commentResponse.setTaskId(commentEntity.getTask().getId());
+        commentResponse.setAuthor(employeeMapper.toEmployeeResponse(commentEntity.getAuthor()));
+
+        return commentResponse;
     }
 }

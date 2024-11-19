@@ -1,9 +1,9 @@
 package com.example.task.management.system.mapper;
 
 import com.example.task.management.system.model.TaskEntity;
-import com.example.task.management.system.model.request.NewTaskRequest;
-import com.example.task.management.system.model.response.TaskResponse;
-import com.example.task.management.system.model.response.TasksListResponse;
+import com_example_task_management_system_model.NewTaskRequest;
+import com_example_task_management_system_model.TaskResponse;
+import com_example_task_management_system_model.TasksListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,15 +25,14 @@ public class TaskMapper {
     }
 
     public TaskResponse toTaskResponse(TaskEntity taskEntity) {
-        TaskResponse taskResponse = TaskResponse.builder()
-                .id(taskEntity.getId())
-                .header(taskEntity.getHeader())
-                .description(taskEntity.getDescription())
-                .status(taskEntity.getStatus())
-                .priority(taskEntity.getPriority())
-                .author(employeeMapper.toEmployeeResponse(taskEntity.getAuthor()))
-                .executors(employeeMapper.toEmployeeResponseList(taskEntity.getExecutors()))
-                .build();
+        TaskResponse taskResponse = new TaskResponse();
+        taskResponse.setId(taskEntity.getId());
+        taskResponse.setHeader(taskEntity.getHeader());
+        taskResponse.setDescription(taskEntity.getDescription());
+        taskResponse.setStatus(taskEntity.getStatus());
+        taskResponse.setPriority(taskEntity.getPriority());
+        taskResponse.author(employeeMapper.toEmployeeResponse(taskEntity.getAuthor()));
+        taskResponse.setExecutor(employeeMapper.toEmployeeResponseList(taskEntity.getExecutors()));
 
         if(taskEntity.getComments()!=null) {
             taskResponse.setComments(taskEntity.getComments().stream().map(commentMapper::toCommentResponse).toList());
@@ -44,7 +43,9 @@ public class TaskMapper {
 
     public TasksListResponse toTaskListResponse(List<TaskEntity> tasksEntityList) {
         List<TaskResponse> tasksResponse = tasksEntityList.stream().map(this::toTaskResponse).toList();
+        TasksListResponse tasksListResponse = new TasksListResponse();
+        tasksListResponse.setAllTasksList(tasksResponse);
 
-        return TasksListResponse.builder().allTasksList(tasksResponse).build();
+        return tasksListResponse;
     }
 }

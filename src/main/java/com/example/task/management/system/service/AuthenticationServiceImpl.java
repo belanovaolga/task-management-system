@@ -3,11 +3,7 @@ package com.example.task.management.system.service;
 import com.example.task.management.system.exception.PasswordIncorrect;
 import com.example.task.management.system.exception.PasswordOrEmailIncorrect;
 import com.example.task.management.system.model.EmployeeEntity;
-import com.example.task.management.system.model.request.PasswordUpdateRequest;
-import com.example.task.management.system.model.request.SignInRequest;
-import com.example.task.management.system.model.request.SignUpRequest;
-import com.example.task.management.system.model.response.EmployeeResponse;
-import com.example.task.management.system.model.response.JwtAuthenticationResponse;
+import com_example_task_management_system_model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +21,7 @@ public class AuthenticationServiceImpl implements  AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
+    @Transactional
     @Override
     public JwtAuthenticationResponse signUp(SignUpRequest signUpRequest) {
         String password = passwordEncoder.encode(signUpRequest.getPassword());
@@ -31,7 +29,7 @@ public class AuthenticationServiceImpl implements  AuthenticationService {
         EmployeeEntity employeeEntity = employeeService.createEmployee(signUpRequest, password);
 
         var jwt = jwtService.generateToken(employeeEntity);
-        return new JwtAuthenticationResponse(jwt);
+        return new JwtAuthenticationResponse().token(jwt);
     }
 
     @Override
@@ -50,9 +48,10 @@ public class AuthenticationServiceImpl implements  AuthenticationService {
                 .loadUserByUsername(signInRequest.getEmail());
 
         String jwt = jwtService.generateToken(userDetails);
-        return new JwtAuthenticationResponse(jwt);
+        return new JwtAuthenticationResponse().token(jwt);
     }
 
+    @Transactional
     @Override
     public EmployeeResponse updatePassword(PasswordUpdateRequest passwordUpdateRequest) {
         if (passwordEncoder.matches(passwordUpdateRequest.getOldPassword(), employeeService.getCurrentEmployeePassword())) {

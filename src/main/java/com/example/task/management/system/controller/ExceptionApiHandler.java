@@ -38,5 +38,10 @@ public class ExceptionApiHandler {
     public ResponseStatusException commentNotFound(CommentNotFound commentNotFound) {
         return new ResponseStatusException(HttpStatusCode.valueOf(404), "The comment does not exist");
     }
+
+    @ExceptionHandler(ExecutorNotFoundException.class)
+    public ResponseStatusException executorNotFound(ExecutorNotFoundException executorNotFoundException) {
+        return new ResponseStatusException(HttpStatusCode.valueOf(403), "You are not in the list of task performers");
+    }
 }
 

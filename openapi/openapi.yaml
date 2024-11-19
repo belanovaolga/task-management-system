@@ -53,8 +53,16 @@ paths:
                 $ref: '#/components/schemas/JwtAuthenticationResponse'
         '409':
           description: The user already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /auth/sign-in:
     post:
       tags:
@@ -78,8 +86,16 @@ paths:
                 $ref: '#/components/schemas/JwtAuthenticationResponse'
         '400':
           description: The email or password is incorrect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /auth/update-password:
     put:
       tags:
@@ -101,6 +117,10 @@ paths:
             application/json: {}
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_USER
@@ -128,12 +148,28 @@ paths:
                 $ref: '#/components/schemas/EmployeeResponse'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '409':
           description: The user already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_USER
@@ -183,10 +219,22 @@ paths:
                 $ref: '#/components/schemas/EmployeeResponse'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_ADMIN
@@ -214,6 +262,10 @@ paths:
                 $ref: '#/components/schemas/TaskResponse'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_ADMIN
@@ -248,8 +300,16 @@ paths:
                 $ref: '#/components/schemas/TaskResponse'
         '404':
           description: The task does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_ADMIN
@@ -282,10 +342,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TaskResponse'
+        '403':
+          description: There is not access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: The task does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
           description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_USER
@@ -311,8 +385,16 @@ paths:
             application/json: {}
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: The task does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_ADMIN
@@ -340,8 +422,16 @@ paths:
                 $ref: '#/components/schemas/TasksListResponse'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_USER
@@ -369,8 +459,16 @@ paths:
                 $ref: '#/components/schemas/TasksListResponse'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: The user does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_USER
@@ -390,8 +488,16 @@ paths:
                 $ref: '#/components/schemas/TasksListResponse'
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: The task does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_USER
@@ -417,8 +523,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
+        '403':
+          description: There is not access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: The task does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_USER
@@ -444,8 +560,16 @@ paths:
             application/json: {}
         '400':
           description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
           description: The comment does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
         - jwtAuth:
             - Role_USER
@@ -454,30 +578,37 @@ components:
   schemas:
     SignUpRequest:
       type: object
+      required:
+        - username
+        - email
+        - password
       properties:
         username:
           type: string
           example: olga belanova
         email:
           type: string
+          format: email
           example: belanova.olga3101@mail.ru
         password:
           type: string
           example: 1234olga
-        role:
-          type: string
-          enum:
-            - USER
-            - ADMIN
     SignInRequest:
       type: object
+      required:
+        - email
+        - password
       properties:
         email:
           type: string
+          format: email
         password:
           type: string
     PasswordUpdateRequest:
       type: object
+      required:
+        - oldPassword
+        - newPassword
       properties:
         oldPassword:
           type: string
@@ -492,21 +623,24 @@ components:
 
     EmployeeUpdateRequest:
       type: object
+      required:
+        - username
+        - email
       properties:
         username:
           type: string
           example: olga belanova
         email:
           type: string
+          format: email
           example: belanova.olga3101@mail.ru
     RoleUpdateRequest:
       type: object
+      required:
+        - role
       properties:
         role:
-          type: string
-          enum:
-            - USER
-            - ADMIN
+          $ref: '#/components/schemas/RoleEnum'
     EmployeeResponse:
       type: object
       properties:
@@ -521,13 +655,16 @@ components:
           type: string
           example: belanova.olga3101@mail.ru
         role:
-          type: string
-          enum:
-            - USER
-            - ADMIN
+          $ref: '#/components/schemas/RoleEnum'
 
     NewTaskRequest:
       type: object
+      required:
+        - header
+        - description
+        - status
+        - priority
+        - executors
       properties:
         header:
           type: string
@@ -536,17 +673,9 @@ components:
           type: string
           example: create new task
         status:
-          type: string
-          enum:
-            - PENDING
-            - PROGRESS
-            - COMPLETED
+          $ref: '#/components/schemas/StatusEnum'
         priority:
-          type: string
-          enum:
-            - HIGH
-            - MEDIUM
-            - LOW
+          $ref: '#/components/schemas/PriorityEnum'
         executors:
           type: array
           items:
@@ -554,6 +683,12 @@ components:
             format: int64
     TaskUpdateRequest:
       type: object
+      required:
+        - header
+        - description
+        - status
+        - priority
+        - executors
       properties:
         header:
           type: string
@@ -562,17 +697,9 @@ components:
           type: string
           example: create new task
         status:
-          type: string
-          enum:
-            - PENDING
-            - PROGRESS
-            - COMPLETED
+          $ref: '#/components/schemas/StatusEnum'
         priority:
-          type: string
-          enum:
-            - HIGH
-            - MEDIUM
-            - LOW
+          $ref: '#/components/schemas/PriorityEnum'
         executors:
           type: array
           items:
@@ -580,13 +707,11 @@ components:
             format: int64
     StatusUpdateRequest:
       type: object
+      required:
+        - status
       properties:
         status:
-          type: string
-          enum:
-            - PENDING
-            - PROGRESS
-            - COMPLETED
+          $ref: '#/components/schemas/StatusEnum'
     TaskResponse:
       type: object
       properties:
@@ -601,29 +726,19 @@ components:
           type: string
           example: create new task
         status:
-          type: string
-          enum:
-            - PENDING
-            - PROGRESS
-            - COMPLETED
+          $ref: '#/components/schemas/StatusEnum'
         priority:
-          type: string
-          enum:
-            - HIGH
-            - MEDIUM
-            - LOW
+          $ref: '#/components/schemas/PriorityEnum'
         comments:
           type: array
           items:
             $ref: '#/components/schemas/CommentResponse'
         author:
-          type: object
-          items:
-            $ref: '#/components/schemas/EmployeeResponse'
+          $ref: '#/components/schemas/EmployeeResponse'
         executor:
           type: array
           items:
-            $ref: '#/components/schemas/TaskResponse'
+            $ref: '#/components/schemas/EmployeeResponse'
     TasksListResponse:
       type: object
       properties:
@@ -632,8 +747,30 @@ components:
           items:
             $ref: '#/components/schemas/TaskResponse'
 
+    RoleEnum:
+      type: string
+      enum:
+        - USER
+        - ADMIN
+    StatusEnum:
+      type: string
+      enum:
+        - PENDING
+        - PROGRESS
+        - COMPLETED
+    PriorityEnum:
+      type: string
+      enum:
+        - HIGH
+        - MEDIUM
+        - LOW
+
+
     NewCommentRequest:
       type: object
+      required:
+        - text
+        - taskId
       properties:
         text:
           type: string
@@ -657,9 +794,15 @@ components:
           format: int64
           example: 1
         author:
-          type: object
-          items:
-            $ref: '#/components/schemas/EmployeeResponse'
+          $ref: '#/components/schemas/EmployeeResponse'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
 
 
   securitySchemes:

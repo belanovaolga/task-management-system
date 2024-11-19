@@ -1,6 +1,5 @@
 package com.example.task.management.system.config;
 
-import com.example.task.management.system.model.enums.Role;
 import com.example.task.management.system.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

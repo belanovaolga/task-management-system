@@ -1,8 +1,8 @@
 package com.example.task.management.system.mapper;
 
 import com.example.task.management.system.model.EmployeeEntity;
-import com.example.task.management.system.model.request.SignUpRequest;
-import com.example.task.management.system.model.response.EmployeeResponse;
+import com_example_task_management_system_model.EmployeeResponse;
+import com_example_task_management_system_model.SignUpRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,12 +17,13 @@ public class EmployeeMapper {
     }
 
     public EmployeeResponse toEmployeeResponse(EmployeeEntity employeeEntity) {
-        return EmployeeResponse.builder()
-                .id(employeeEntity.getId())
-                .username(employeeEntity.getUsername())
-                .email(employeeEntity.getEmail())
-                .role(employeeEntity.getRole().toString())
-                .build();
+        EmployeeResponse employeeResponse = new EmployeeResponse();
+        employeeResponse.setId(employeeEntity.getId());
+        employeeResponse.setUsername(employeeEntity.getUsername());
+        employeeResponse.setEmail(employeeEntity.getEmail());
+        employeeResponse.setRole(employeeEntity.getRole());
+
+        return employeeResponse;
     }
 
     protected List<EmployeeResponse> toEmployeeResponseList(List<EmployeeEntity> employeeEntityList) {

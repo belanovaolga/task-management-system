@@ -1,10 +1,10 @@
 package com.example.task.management.system.service;
 
-import com.example.task.management.system.model.request.PasswordUpdateRequest;
-import com.example.task.management.system.model.request.SignInRequest;
-import com.example.task.management.system.model.request.SignUpRequest;
-import com.example.task.management.system.model.response.EmployeeResponse;
-import com.example.task.management.system.model.response.JwtAuthenticationResponse;
+import com_example_task_management_system_model.JwtAuthenticationResponse;
+import com_example_task_management_system_model.PasswordUpdateRequest;
+import com_example_task_management_system_model.SignInRequest;
+import com_example_task_management_system_model.SignUpRequest;
+import com_example_task_management_system_model.EmployeeResponse;
 
 public interface AuthenticationService {
     JwtAuthenticationResponse signUp(SignUpRequest signUpRequest);

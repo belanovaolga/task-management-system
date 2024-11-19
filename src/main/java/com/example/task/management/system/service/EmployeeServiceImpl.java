@@ -4,17 +4,17 @@ import com.example.task.management.system.exception.EmployeeAlreadyExists;
 import com.example.task.management.system.exception.EmployeeNotFound;
 import com.example.task.management.system.mapper.EmployeeMapper;
 import com.example.task.management.system.model.EmployeeEntity;
-import com.example.task.management.system.model.enums.Role;
 import com.example.task.management.system.model.putAuth.UserDetailsDto;
-import com.example.task.management.system.model.request.EmployeeUpdateRequest;
-import com.example.task.management.system.model.request.RoleUpdateRequest;
-import com.example.task.management.system.model.request.SignUpRequest;
-import com.example.task.management.system.model.response.EmployeeResponse;
 import com.example.task.management.system.repository.EmployeeRepository;
+import com_example_task_management_system_model.EmployeeResponse;
+import com_example_task_management_system_model.EmployeeUpdateRequest;
+import com_example_task_management_system_model.RoleUpdateRequest;
+import com_example_task_management_system_model.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity createEmployee(SignUpRequest signUpRequest, String password) {
         EmployeeEntity employeeEntity = employeeMapper.fromEmployeeSingUp(signUpRequest);
-        employeeEntity.setRole(Role.ADMIN);
+        employeeEntity.setRole(RoleUpdateRequest.RoleEnum.USER);
         employeeEntity.setPassword(password);
 
 
@@ -40,13 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeEntity;
     }
 
-    @Override
-    public EmployeeResponse findEmployeeById(Long employeeId) {
-        EmployeeEntity employee = findById(employeeId);
-
-        return employeeMapper.toEmployeeResponse(employee);
-    }
-
+    @Transactional
     @Override
     public EmployeeResponse updateEmployee(EmployeeUpdateRequest employeeUpdateRequest) {
         UserDetailsDto userDetailsDto = authService.getCurrentEmployeesId();
@@ -86,6 +80,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.toEmployeeResponse(currentEmployee);
     }
 
+    @Transactional
     @Override
     public EmployeeResponse updateRole(Long employeeId, RoleUpdateRequest roleUpdateRequest) {
         EmployeeEntity employeeEntity = findById(employeeId);
@@ -95,9 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employeeRepository.save(employeeEntity);
         }
 
-        EmployeeResponse employeeResponse = employeeMapper.toEmployeeResponse(employeeEntity);
-
-        return employeeResponse;
+        return employeeMapper.toEmployeeResponse(employeeEntity);
     }
 
     @Override
@@ -123,6 +116,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private EmployeeEntity findEmployeeByEmailUDS(String email) throws UsernameNotFoundException {
-        return employeeRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
+        return employeeRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

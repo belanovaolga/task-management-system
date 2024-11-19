@@ -1,13 +1,14 @@
 package com.example.task.management.system.service;
 
 import com.example.task.management.system.exception.CommentNotFound;
+import com.example.task.management.system.exception.ExecutorNotFoundException;
 import com.example.task.management.system.mapper.CommentMapper;
 import com.example.task.management.system.model.CommentEntity;
 import com.example.task.management.system.model.EmployeeEntity;
 import com.example.task.management.system.model.TaskEntity;
-import com.example.task.management.system.model.request.NewCommentRequest;
-import com.example.task.management.system.model.response.CommentResponse;
 import com.example.task.management.system.repository.CommentRepository;
+import com_example_task_management_system_model.CommentResponse;
+import com_example_task_management_system_model.NewCommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,12 +24,14 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public CommentResponse createComment(NewCommentRequest newCommentRequest) {
-//        TODO: проверить, является ли текущий пользователь исполнителем
         EmployeeEntity currentEmployee = employeeService.getCurrentEmployee();
+        TaskEntity taskEntity = taskService.findById(newCommentRequest.getTaskId());
+        if(!taskEntity.getExecutors().contains(currentEmployee)) {
+            throw new ExecutorNotFoundException();
+        }
 
         CommentEntity commentEntity = commentMapper.toCommentEntity(newCommentRequest);
         commentEntity.setAuthor(currentEmployee);
-        TaskEntity taskEntity = taskService.findById(newCommentRequest.getTaskId());
         commentEntity.setTask(taskEntity);
 
         CommentEntity newComment = commentRepository.save(commentEntity);

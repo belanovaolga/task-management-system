@@ -6,10 +6,7 @@ import com.example.task.management.system.mapper.EmployeeMapper;
 import com.example.task.management.system.model.EmployeeEntity;
 import com.example.task.management.system.model.putAuth.UserDetailsDto;
 import com.example.task.management.system.repository.EmployeeRepository;
-import com_example_task_management_system_model.EmployeeResponse;
-import com_example_task_management_system_model.EmployeeUpdateRequest;
-import com_example_task_management_system_model.RoleUpdateRequest;
-import com_example_task_management_system_model.SignUpRequest;
+import com_example_task_management_system_model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity createEmployee(SignUpRequest signUpRequest, String password) {
         EmployeeEntity employeeEntity = employeeMapper.fromEmployeeSingUp(signUpRequest);
-        employeeEntity.setRole(RoleUpdateRequest.RoleEnum.USER);
+        employeeEntity.setRole(RoleEnum.USER);
         employeeEntity.setPassword(password);
 
 

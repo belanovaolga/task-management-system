@@ -1,0 +1,672 @@
+openapi: 3.0.3
+info:
+  title: Task Management System
+  description: |-
+    Task management system that provides allows you to work with tasks. Access to tasks appears after registration and authorization of employees in the system. Employees, depending on their roles, can perform various actions in the system.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Dev server
+tags:
+  - name: authentication
+    description: Access to authentication
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: employees
+    description: Access to employees accounts
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: tasks
+    description: Access to tasks
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: comments
+    description: Access to comments
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+paths:
+  /auth/sign-up:
+    post:
+      tags:
+        - authentication
+      summary: User registration
+      description: Register a new employee
+      operationId: signUp
+      requestBody:
+        description: Registration request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+        required: true
+      responses:
+        '200':
+          description: Response with access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtAuthenticationResponse'
+        '409':
+          description: The user already exists
+        '422':
+          description: Validation exception
+  /auth/sign-in:
+    post:
+      tags:
+        - authentication
+      summary: User authorization
+      description: Authorization and receipt of an access token
+      operationId: signIn
+      requestBody:
+        description: Authorization request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequest'
+        required: true
+      responses:
+        '200':
+          description: Response with access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtAuthenticationResponse'
+        '400':
+          description: The email or password is incorrect
+        '422':
+          description: Validation exception
+  /auth/update-password:
+    put:
+      tags:
+        - authentication
+      summary: Update password
+      description: Allows the user to change the password
+      operationId: updatePassword
+      requestBody:
+        description: Password change request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Response with access token
+          content:
+            application/json: {}
+        '422':
+          description: Validation exception
+      security:
+        - jwtAuth:
+            - Role_USER
+
+  /employees/update:
+    put:
+      tags:
+        - employees
+      summary: Update employee
+      description: Allows the user to change information about himself
+      operationId: updateEmployee
+      requestBody:
+        description: User change request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Response with information about the entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: The user does not exist
+        '409':
+          description: The user already exists
+        '422':
+          description: Validation exception
+      security:
+        - jwtAuth:
+            - Role_USER
+  /employees/delete:
+    delete:
+      tags:
+        - employees
+      summary: Delete employee
+      description: Allows the user to delete his account
+      operationId: deleteEmployee
+      responses:
+        '200':
+          description: The response about the successful deletion of the account
+          content:
+            application/json: {}
+      security:
+        - jwtAuth:
+            - Role_USER
+  /employees/{employee_id}/role:
+    put:
+      tags:
+        - employees
+      summary: Update role
+      description: Allows you to change the role of any user
+      operationId: updateRole
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          description: user id
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Request to change the user's role
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Response with information about the entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: The user does not exist
+        '422':
+          description: Validation exception
+      security:
+        - jwtAuth:
+            - Role_ADMIN
+
+  /tasks:
+    post:
+      tags:
+        - tasks
+      summary: Create task
+      description: Allows the user to create a task
+      operationId: createTask
+      requestBody:
+        description: Request to create a task
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewTaskRequest'
+        required: true
+      responses:
+        '200':
+          description: Response with information about the entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '422':
+          description: Validation exception
+      security:
+        - jwtAuth:
+            - Role_ADMIN
+  /tasks/{task_id}:
+    put:
+      tags:
+        - tasks
+      summary: Update task
+      description: Allows the user to update a task
+      operationId: updateTask
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          description: task id
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Request to update a task
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Response with information about the entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '404':
+          description: The task does not exist
+        '422':
+          description: Validation exception
+      security:
+        - jwtAuth:
+            - Role_ADMIN
+  /tasks/{task_id}/update-status:
+    put:
+      tags:
+        - tasks
+      summary: Update status
+      description: Allows the user to update the status of the task
+      operationId: updateStatus
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          description: task id
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Request to update the status of the task
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Response with information about the entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+        '404':
+          description: The task does not exist
+        '422':
+          description: Validation exception
+      security:
+        - jwtAuth:
+            - Role_USER
+  /tasks/{task_id}/delete:
+    delete:
+      tags:
+        - tasks
+      summary: Delete task
+      description: Allows the user to delete a task
+      operationId: deleteTask
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          description: task id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: The response about the successful deletion of the task
+          content:
+            application/json: {}
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: The task does not exist
+      security:
+        - jwtAuth:
+            - Role_ADMIN
+  /tasks/by-author/{author_id}:
+    get:
+      tags:
+        - tasks
+      summary: Find the tasks of a specific author
+      description: Allows the user to get the tasks of a specific author
+      operationId: taskByAuthor
+      parameters:
+        - name: author_id
+          in: path
+          required: true
+          description: author id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Response with information about the entities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TasksListResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: The user does not exist
+      security:
+        - jwtAuth:
+            - Role_USER
+  /tasks/by-executor/{executor_id}:
+    get:
+      tags:
+        - tasks
+      summary: Find the tasks of a specific executor
+      description: Allows the user to get the tasks of a specific executor
+      operationId: taskByExecutor
+      parameters:
+        - name: executor_id
+          in: path
+          required: true
+          description: executor id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Response with information about the entities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TasksListResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: The user does not exist
+      security:
+        - jwtAuth:
+            - Role_USER
+  /tasks/all-tasks:
+    get:
+      tags:
+        - tasks
+      summary: Find all tasks
+      description: Allows the user to get a list of existing tasks
+      operationId: allTasks
+      responses:
+        '200':
+          description: Response with information about the entities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TasksListResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: The task does not exist
+      security:
+        - jwtAuth:
+            - Role_USER
+
+  /comments:
+    post:
+      tags:
+        - comments
+      summary: Create comment
+      description: Allows the user to create a comment on the task
+      operationId: createComment
+      requestBody:
+        description: Request to create a task
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCommentRequest'
+        required: true
+      responses:
+        '200':
+          description: Response with information about the entities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponse'
+        '404':
+          description: The task does not exist
+      security:
+        - jwtAuth:
+            - Role_USER
+  /comments/{comment_id}:
+    delete:
+      tags:
+        - comments
+      summary: Delete comment
+      description: Allows the user to delete a comment
+      operationId: deleteComment
+      parameters:
+        - name: comment_id
+          in: path
+          required: true
+          description: comment id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: The response about the successful deletion of the comment
+          content:
+            application/json: {}
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: The comment does not exist
+      security:
+        - jwtAuth:
+            - Role_USER
+
+components:
+  schemas:
+    SignUpRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: olga belanova
+        email:
+          type: string
+          example: belanova.olga3101@mail.ru
+        password:
+          type: string
+          example: 1234olga
+        role:
+          type: string
+          enum:
+            - USER
+            - ADMIN
+    SignInRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    PasswordUpdateRequest:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+    JwtAuthenticationResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJpZCI6NSwiZW1haWwiOiJvbHlhQG1haWwucnUiLCJzdWIiOiJvbHlhIiwiaWF0IjoxNzMxOTUyNzAwLCJleHAiOjE3MzIwOTY3MDB9.9J3OZiTtMeiUcCl5pEKkrp58rkm9gOlHJpwtgDtUSjE
+
+    EmployeeUpdateRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: olga belanova
+        email:
+          type: string
+          example: belanova.olga3101@mail.ru
+    RoleUpdateRequest:
+      type: object
+      properties:
+        role:
+          type: string
+          enum:
+            - USER
+            - ADMIN
+    EmployeeResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        username:
+          type: string
+          example: olga belanova
+        email:
+          type: string
+          example: belanova.olga3101@mail.ru
+        role:
+          type: string
+          enum:
+            - USER
+            - ADMIN
+
+    NewTaskRequest:
+      type: object
+      properties:
+        header:
+          type: string
+          example: new task
+        description:
+          type: string
+          example: create new task
+        status:
+          type: string
+          enum:
+            - PENDING
+            - PROGRESS
+            - COMPLETED
+        priority:
+          type: string
+          enum:
+            - HIGH
+            - MEDIUM
+            - LOW
+        executors:
+          type: array
+          items:
+            type: integer
+            format: int64
+    TaskUpdateRequest:
+      type: object
+      properties:
+        header:
+          type: string
+          example: new task
+        description:
+          type: string
+          example: create new task
+        status:
+          type: string
+          enum:
+            - PENDING
+            - PROGRESS
+            - COMPLETED
+        priority:
+          type: string
+          enum:
+            - HIGH
+            - MEDIUM
+            - LOW
+        executors:
+          type: array
+          items:
+            type: integer
+            format: int64
+    StatusUpdateRequest:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - PENDING
+            - PROGRESS
+            - COMPLETED
+    TaskResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        header:
+          type: string
+          example: new task
+        description:
+          type: string
+          example: create new task
+        status:
+          type: string
+          enum:
+            - PENDING
+            - PROGRESS
+            - COMPLETED
+        priority:
+          type: string
+          enum:
+            - HIGH
+            - MEDIUM
+            - LOW
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentResponse'
+        author:
+          type: object
+          items:
+            $ref: '#/components/schemas/EmployeeResponse'
+        executor:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskResponse'
+    TasksListResponse:
+      type: object
+      properties:
+        allTasksList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskResponse'
+
+    NewCommentRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          example: new comment
+        taskId:
+          type: integer
+          format: int64
+          example: 1
+    CommentResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        text:
+          type: string
+          example: new comment
+        taskId:
+          type: integer
+          format: int64
+          example: 1
+        author:
+          type: object
+          items:
+            $ref: '#/components/schemas/EmployeeResponse'
+
+
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-scopes:
+        Role_USER: User role
+        Role_ADMIN: Admin role

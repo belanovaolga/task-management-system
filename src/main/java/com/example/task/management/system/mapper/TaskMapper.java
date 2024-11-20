@@ -1,9 +1,9 @@
 package com.example.task.management.system.mapper;
 
+import com.example.task.management.system.model.NewTaskRequest;
 import com.example.task.management.system.model.TaskEntity;
-import com_example_task_management_system_model.NewTaskRequest;
-import com_example_task_management_system_model.TaskResponse;
-import com_example_task_management_system_model.TasksListResponse;
+import com.example.task.management.system.model.TaskResponse;
+import com.example.task.management.system.model.TasksListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

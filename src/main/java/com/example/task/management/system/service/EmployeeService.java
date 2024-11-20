@@ -1,10 +1,6 @@
 package com.example.task.management.system.service;
 
-import com.example.task.management.system.model.EmployeeEntity;
-import com_example_task_management_system_model.EmployeeResponse;
-import com_example_task_management_system_model.EmployeeUpdateRequest;
-import com_example_task_management_system_model.RoleUpdateRequest;
-import com_example_task_management_system_model.SignUpRequest;
+import com.example.task.management.system.model.*;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface EmployeeService {
@@ -16,4 +12,6 @@ public interface EmployeeService {
     EmployeeEntity getCurrentEmployee();
     String getCurrentEmployeePassword();
     UserDetailsService userDetailsService();
+
+    EmployeeResponse findEmployeeById(Long employeeId);
 }

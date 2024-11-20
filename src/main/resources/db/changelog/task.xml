@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-    <changeSet id="1731920805789-3" author="olya (generated)">
+    <changeSet id="1732057089882-3" author="olya (generated)">
         <createTable tableName="task">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_task"/>
@@ -15,10 +15,9 @@
             <column name="status" type="VARCHAR(255)"/>
             <column name="priority" type="VARCHAR(255)"/>
             <column name="author_id" type="BIGINT"/>
-            <column name="executor_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet id="1731920805789-4" author="olya (generated)">
+    <changeSet id="1732057089882-4" author="olya (generated)">
         <createTable tableName="task_comments">
             <column name="task_entity_id" type="BIGINT">
                 <constraints nullable="false"/>
@@ -28,26 +27,46 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="1731920805789-5" author="olya (generated)">
+    <changeSet id="1732057089882-5" author="olya (generated)">
+        <createTable tableName="task_executors">
+            <column name="task_entity_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="executors_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1732057089882-6" author="olya (generated)">
         <addUniqueConstraint columnNames="comments_id" constraintName="uc_task_comments_comments"
                              tableName="task_comments"/>
     </changeSet>
-    <changeSet id="1731920805789-8" author="olya (generated)">
+    <changeSet id="1732057089882-7" author="olya (generated)">
+        <addUniqueConstraint columnNames="executors_id" constraintName="uc_task_executors_executors"
+                             tableName="task_executors"/>
+    </changeSet>
+    <changeSet id="1732057089882-10" author="olya (generated)">
         <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="task" constraintName="FK_TASK_ON_AUTHOR"
                                  referencedColumnNames="id" referencedTableName="employee"/>
     </changeSet>
-    <changeSet id="1731920805789-9" author="olya (generated)">
-        <addForeignKeyConstraint baseColumnNames="executor_id" baseTableName="task" constraintName="FK_TASK_ON_EXECUTOR"
-                                 referencedColumnNames="id" referencedTableName="employee"/>
-    </changeSet>
-    <changeSet id="1731920805789-10" author="olya (generated)">
+    <changeSet id="1732057089882-11" author="olya (generated)">
         <addForeignKeyConstraint baseColumnNames="comments_id" baseTableName="task_comments"
                                  constraintName="fk_tascom_on_comment_entity" referencedColumnNames="id"
                                  referencedTableName="comment"/>
     </changeSet>
-    <changeSet id="1731920805789-11" author="olya (generated)">
+    <changeSet id="1732057089882-12" author="olya (generated)">
         <addForeignKeyConstraint baseColumnNames="task_entity_id" baseTableName="task_comments"
                                  constraintName="fk_tascom_on_task_entity" referencedColumnNames="id"
+                                 referencedTableName="task"/>
+    </changeSet>
+    <changeSet id="1732057089882-13" author="olya (generated)">
+        <addForeignKeyConstraint baseColumnNames="executors_id" baseTableName="task_executors"
+                                 constraintName="fk_tasexe_on_employee_entity" referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+    <changeSet id="1732057089882-14" author="olya (generated)">
+        <addForeignKeyConstraint baseColumnNames="task_entity_id" baseTableName="task_executors"
+                                 constraintName="fk_tasexe_on_task_entity" referencedColumnNames="id"
                                  referencedTableName="task"/>
     </changeSet>
 

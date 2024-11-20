@@ -146,12 +146,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmployeeResponse'
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '404':
           description: The user does not exist
           content:
@@ -217,12 +211,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EmployeeResponse'
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '404':
           description: The user does not exist
           content:
@@ -383,12 +371,6 @@ paths:
           description: The response about the successful deletion of the task
           content:
             application/json: {}
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '404':
           description: The task does not exist
           content:
@@ -420,12 +402,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TasksListResponse'
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '404':
           description: The user does not exist
           content:
@@ -457,12 +433,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TasksListResponse'
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '404':
           description: The user does not exist
           content:
@@ -486,12 +456,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TasksListResponse'
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '404':
           description: The task does not exist
           content:
@@ -558,12 +522,6 @@ paths:
           description: The response about the successful deletion of the comment
           content:
             application/json: {}
-        '400':
-          description: Invalid ID supplied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '404':
           description: The comment does not exist
           content:

@@ -2,8 +2,7 @@ package com.example.task.management.system.service;
 
 import com.example.task.management.system.exception.PasswordIncorrect;
 import com.example.task.management.system.exception.PasswordOrEmailIncorrect;
-import com.example.task.management.system.model.EmployeeEntity;
-import com_example_task_management_system_model.*;
+import com.example.task.management.system.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

@@ -22,7 +22,6 @@ public class JwtService {
     @Value("${token.signing.key}")
     private String jwtSigningKey;
 
-    //извлечение почты пользователя из токена
     public String extractEmail(String token) {
         final Claims claims = extractAllClaims(token);
         return claims.get("email", String.class);
@@ -54,7 +53,6 @@ public class JwtService {
         return (email.equals(username)) && !isTokenExpired(token);
     }
 
-    //извлечение данных из токена
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
         final Claims claims = extractAllClaims(token);
         return claimsResolvers.apply(claims);
@@ -67,23 +65,19 @@ public class JwtService {
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
-    //проверка токена на просроченность
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    //извлечение даты истечения токена
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    //извлечение данных из токена
     private Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
                 .getBody();
     }
 
-    //получение ключа для подписи токена
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);
         return Keys.hmacShaKeyFor(keyBytes);

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.ValidationException;
+
 @RestControllerAdvice
 public class ExceptionApiHandler {
 
@@ -42,6 +44,11 @@ public class ExceptionApiHandler {
     @ExceptionHandler(ExecutorNotFoundException.class)
     public ResponseStatusException executorNotFound(ExecutorNotFoundException executorNotFoundException) {
         return new ResponseStatusException(HttpStatusCode.valueOf(403), "You are not in the list of task performers");
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseStatusException invalidation(ValidationException validationException) {
+        return new ResponseStatusException(HttpStatusCode.valueOf(422), "Invalid data");
     }
 }
 

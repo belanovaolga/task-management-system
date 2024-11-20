@@ -1,9 +1,9 @@
 package com.example.task.management.system.controller;
 
+import com.example.task.management.system.api.CommentsApi;
+import com.example.task.management.system.model.CommentResponse;
+import com.example.task.management.system.model.NewCommentRequest;
 import com.example.task.management.system.service.CommentService;
-import com_example_task_management_system_api.CommentsApi;
-import com_example_task_management_system_model.CommentResponse;
-import com_example_task_management_system_model.NewCommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;

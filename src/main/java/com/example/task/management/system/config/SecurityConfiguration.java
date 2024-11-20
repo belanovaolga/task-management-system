@@ -1,5 +1,6 @@
 package com.example.task.management.system.config;
 
+import com.example.task.management.system.model.RoleEnum;
 import com.example.task.management.system.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                //своего рода отключение CORS (разрешение запросов со всех доменов)
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new CorsConfiguration();
                     corsConfiguration.setAllowedOriginPatterns(List.of("*"));
@@ -42,12 +42,11 @@ public class SecurityConfiguration {
                     corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
                 }))
-                //настройка доступа к конечным точкам
                 .authorizeRequests(request -> request
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/swagger-ui/index.html", "/swagger-ui/**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/employees/*/role").hasRole(Role.ADMIN.toString())
-                        .requestMatchers("/employees**", "/tasks**", "/comments**").hasAnyRole(Role.USER.toString(), Role.ADMIN.toString())
+                        .requestMatchers("/swagger-ui/index.html", "/swagger-ui**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/employees/*/role", "/tasks", "/tasks/*", "/tasks**/delete").hasRole(RoleEnum.ADMIN.toString())
+                        .requestMatchers("/employees**", "/tasks/**/update-status", "/tasks/by-author/*", "/tasks/by-executor/*", "/tasks/all-tasks", "/comments**").hasAnyRole(RoleEnum.USER.toString(), RoleEnum.ADMIN.toString())
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())

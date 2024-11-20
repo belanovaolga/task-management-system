@@ -1,7 +1,5 @@
 package com.example.task.management.system.model;
 
-import com_example_task_management_system_model.PriorityEnum;
-import com_example_task_management_system_model.StatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

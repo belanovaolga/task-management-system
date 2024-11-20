@@ -12,6 +12,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        response.getWriter().write("Для получения доступа необходимо иметь роль admin");
+        response.getWriter().write("To gain access, you must have the \"ADMIN\" role");
     }
 }

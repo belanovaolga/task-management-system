@@ -1,8 +1,8 @@
 package com.example.task.management.system.mapper;
 
 import com.example.task.management.system.model.CommentEntity;
-import com_example_task_management_system_model.CommentResponse;
-import com_example_task_management_system_model.NewCommentRequest;
+import com.example.task.management.system.model.CommentResponse;
+import com.example.task.management.system.model.NewCommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

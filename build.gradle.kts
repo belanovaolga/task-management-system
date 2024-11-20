@@ -46,23 +46,19 @@ openApiGenerate {
     generatorName.set("spring")
     configOptions.set(
         mapOf(
-            "useTags" to "true",
-            "interfaceOnly" to "false",
-            "library" to "spring-boot",
-            "useLombok" to "true",
-            "useBuilder" to "true",
             "generateApis" to "true",
             "generateSupportingFiles" to "false",
+            "interfaceOnly" to "true",
+            "library" to "spring-boot",
             "useBeanValidation" to "true",
-            "openApiNullable" to "false"
+            "openApiNullable" to "false",
         )
     )
     inputSpec.set("$rootDir/openapi/openapi.yaml")
     outputDir.set("$buildDir/generated")
-    ignoreFileOverride.set("$projectDir/openapi-generator-java-sources.ignore")
-    invokerPackage.set("task.management.system")
-    modelPackage.set("com/example/task/management/system/model")
-    apiPackage.set("com/example/task/management/system/api")
+
+    modelPackage.set("com.example.task.management.system.model")
+    apiPackage.set("com.example.task.management.system.api")
 }
 
 sourceSets {

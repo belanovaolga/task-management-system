@@ -7,5 +7,4 @@
     <include file="db/changelog/employee.xml"/>
     <include file="db/changelog/comment.xml"/>
     <include file="db/changelog/task.xml"/>
-    <include file="db/changelog/fk.comment.on.task.xml"/>
 </databaseChangeLog>

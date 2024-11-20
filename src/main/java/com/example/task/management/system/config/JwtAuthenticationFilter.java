@@ -34,14 +34,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        //получаем токен из заголовка
         String authHeader = request.getHeader(HEADER_NAME);
         if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, BEARER_PREFIX)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        //обрезаем префикс и получаем почту пользователя из токена
         String token = authHeader.substring(BEARER_PREFIX.length());
         String email = jwtService.extractEmail(token);
 
@@ -49,7 +47,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Collection<? extends GrantedAuthority> grantedAuthorities = jwtService.extractRoles(token);
             UserDetailsDto userDetailsDto = new UserDetailsDto(grantedAuthorities, token, jwtService.getExtractAllClaims(token));
 
-            //если токен валиден, то аутентифицируем пользователя
             if (jwtService.isTokenValid(token, userDetailsDto)) {
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
 

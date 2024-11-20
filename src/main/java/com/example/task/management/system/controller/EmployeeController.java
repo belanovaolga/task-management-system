@@ -1,10 +1,10 @@
 package com.example.task.management.system.controller;
 
+import com.example.task.management.system.api.EmployeesApi;
+import com.example.task.management.system.model.EmployeeResponse;
+import com.example.task.management.system.model.EmployeeUpdateRequest;
+import com.example.task.management.system.model.RoleUpdateRequest;
 import com.example.task.management.system.service.EmployeeService;
-import com_example_task_management_system_api.EmployeesApi;
-import com_example_task_management_system_model.EmployeeResponse;
-import com_example_task_management_system_model.EmployeeUpdateRequest;
-import com_example_task_management_system_model.RoleUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +16,7 @@ public class EmployeeController implements EmployeesApi {
 
     @Override
     public ResponseEntity<EmployeeResponse> updateEmployee(EmployeeUpdateRequest employeeUpdateRequest) {
-        employeeService.updateEmployee(employeeUpdateRequest);
-        return EmployeesApi.super.updateEmployee(employeeUpdateRequest);
+        return ResponseEntity.ok(employeeService.updateEmployee(employeeUpdateRequest));
     }
 
     @Override

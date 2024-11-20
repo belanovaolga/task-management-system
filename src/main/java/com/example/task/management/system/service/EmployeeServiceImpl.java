@@ -3,10 +3,9 @@ package com.example.task.management.system.service;
 import com.example.task.management.system.exception.EmployeeAlreadyExists;
 import com.example.task.management.system.exception.EmployeeNotFound;
 import com.example.task.management.system.mapper.EmployeeMapper;
-import com.example.task.management.system.model.EmployeeEntity;
+import com.example.task.management.system.model.*;
 import com.example.task.management.system.model.putAuth.UserDetailsDto;
 import com.example.task.management.system.repository.EmployeeRepository;
-import com_example_task_management_system_model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -106,6 +105,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public UserDetailsService userDetailsService() {
         return this::findEmployeeByEmailUDS;
+    }
+
+    @Override
+    public EmployeeResponse findEmployeeById(Long employeeId) {
+        return employeeMapper.toEmployeeResponse(findById(employeeId));
     }
 
     protected EmployeeEntity findById(Long employeeId) {

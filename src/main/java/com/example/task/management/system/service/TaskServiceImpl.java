@@ -3,11 +3,8 @@ package com.example.task.management.system.service;
 import com.example.task.management.system.exception.ExecutorNotFoundException;
 import com.example.task.management.system.exception.TaskNotFound;
 import com.example.task.management.system.mapper.TaskMapper;
-import com.example.task.management.system.model.CommentEntity;
-import com.example.task.management.system.model.EmployeeEntity;
-import com.example.task.management.system.model.TaskEntity;
+import com.example.task.management.system.model.*;
 import com.example.task.management.system.repository.TaskRepository;
-import com_example_task_management_system_model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,7 +86,7 @@ public class TaskServiceImpl implements TaskService {
     public TasksListResponse findTasksByExecutor(Long executorId) {
         EmployeeEntity executor = employeeService.findById(executorId);
 
-        List<TaskEntity> tasksByExecutor = taskRepository.findAllByExecutor(executor);
+        List<TaskEntity> tasksByExecutor = taskRepository.findAllByExecutors(executor);
 
         return taskMapper.toTaskListResponse(tasksByExecutor);
     }

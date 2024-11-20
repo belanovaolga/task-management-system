@@ -1,8 +1,8 @@
 package com.example.task.management.system.controller;
 
+import com.example.task.management.system.api.TasksApi;
+import com.example.task.management.system.model.*;
 import com.example.task.management.system.service.TaskService;
-import com_example_task_management_system_api.TasksApi;
-import com_example_task_management_system_model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;

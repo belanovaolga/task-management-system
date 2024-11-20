@@ -6,6 +6,9 @@ import com.example.task.management.system.mapper.TaskMapper;
 import com.example.task.management.system.model.*;
 import com.example.task.management.system.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,26 +77,35 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TasksListResponse findTasksByAuthor(Long authorId) {
+    public TasksListResponse findTasksByAuthor(Long authorId, Integer page) {
         EmployeeEntity author = employeeService.findById(authorId);
 
-        List<TaskEntity> tasksByAuthor = taskRepository.findAllByAuthor(author);
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<TaskEntity> allByAuthor = taskRepository.findAllByAuthor(author, pageable);
+
+        List<TaskEntity> tasksByAuthor = allByAuthor.stream().toList();
 
         return taskMapper.toTaskListResponse(tasksByAuthor);
     }
 
     @Override
-    public TasksListResponse findTasksByExecutor(Long executorId) {
+    public TasksListResponse findTasksByExecutor(Long executorId, Integer page) {
         EmployeeEntity executor = employeeService.findById(executorId);
 
-        List<TaskEntity> tasksByExecutor = taskRepository.findAllByExecutors(executor);
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<TaskEntity> allByExecutors = taskRepository.findAllByExecutors(executor, pageable);
+
+        List<TaskEntity> tasksByExecutor = allByExecutors.stream().toList();
 
         return taskMapper.toTaskListResponse(tasksByExecutor);
     }
 
     @Override
-    public TasksListResponse findAllTasks() {
-        List<TaskEntity> tasksEntityList = taskRepository.findAll();
+    public TasksListResponse findAllTasks(Integer page) {
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<TaskEntity> allTasks = taskRepository.findAll(pageable);
+
+        List<TaskEntity> tasksEntityList = allTasks.stream().toList();
 
         return taskMapper.toTaskListResponse(tasksEntityList);
     }

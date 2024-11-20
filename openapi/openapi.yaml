@@ -395,6 +395,12 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: Response with information about the entities
@@ -426,6 +432,12 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: Response with information about the entities
@@ -449,6 +461,13 @@ paths:
       summary: Find all tasks
       description: Allows the user to get a list of existing tasks
       operationId: allTasks
+      parameters:
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: Response with information about the entities

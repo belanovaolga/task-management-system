@@ -6,7 +6,6 @@ import com.example.task.management.system.model.EmployeeUpdateRequest;
 import com.example.task.management.system.model.RoleUpdateRequest;
 import com.example.task.management.system.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +22,7 @@ public class EmployeeController implements EmployeesApi {
     @Override
     public ResponseEntity<Void> deleteEmployee() {
         employeeService.deleteEmployee();
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return ResponseEntity.noContent().build();
     }
 
     @Override

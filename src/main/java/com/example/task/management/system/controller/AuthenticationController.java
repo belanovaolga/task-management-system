@@ -7,7 +7,6 @@ import com.example.task.management.system.model.SignInRequest;
 import com.example.task.management.system.model.SignUpRequest;
 import com.example.task.management.system.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +28,6 @@ public class AuthenticationController implements AuthApi {
     @Override
     public ResponseEntity<Void> updatePassword(PasswordUpdateRequest passwordUpdateRequest) {
         authenticationService.updatePassword(passwordUpdateRequest);
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return ResponseEntity.noContent().build();
     }
 }

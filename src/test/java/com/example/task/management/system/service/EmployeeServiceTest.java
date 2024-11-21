@@ -1,5 +1,6 @@
 package com.example.task.management.system.service;
 
+import com.example.task.management.system.exception.EmployeeAlreadyExists;
 import com.example.task.management.system.exception.EmployeeNotFound;
 import com.example.task.management.system.mapper.EmployeeMapper;
 import com.example.task.management.system.model.*;
@@ -34,11 +35,8 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void createEmployee() {
-        SignUpRequest signUpRequest = new SignUpRequest();
-        signUpRequest.setUsername("james");
-        signUpRequest.setEmail("james@mail.ru");
-        signUpRequest.setPassword("james");
+    void shouldCreateEmployee() {
+        SignUpRequest signUpRequest = new SignUpRequest("james", "james@mail.ru", "james");
         Mockito.when(mockEmployeeRepository.existsByEmail(employee1.getEmail())).thenReturn(false);
         Optional<EmployeeEntity> optionalEmployee = Optional.of(employee1);
         Mockito.when(mockEmployeeRepository.findById(employee1.getId())).thenReturn(optionalEmployee);
@@ -49,7 +47,18 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void updateEmployee() {
+    void shouldCreateEmployee_whenEmployeeAlreadyExists() {
+        SignUpRequest signUpRequest = new SignUpRequest();
+        signUpRequest.setEmail("james@mail.ru");
+        Mockito.when(mockEmployeeRepository.existsByEmail(employee1.getEmail())).thenReturn(true);
+
+        assertThrows(EmployeeAlreadyExists.class, () -> {
+            employeeService.createEmployee(signUpRequest, "password");
+        });
+    }
+
+    @Test
+    void shouldUpdateEmployee() {
         EmployeeEntity expectedEmployee = new EmployeeEntity();
         expectedEmployee.setUsername("jon");
         expectedEmployee.setEmail("jonjon@mail.ru");
@@ -73,7 +82,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void deleteEmployee() {
+    void shouldDeleteEmployee() {
         Mockito.when(mockAuthService.getCurrentEmployeesId()).thenReturn(mockUserDetailsDto);
         Mockito.when(mockUserDetailsDto.getId()).thenReturn(employee1.getId());
         Optional<EmployeeEntity> optionalEmployee = Optional.of(employee1);
@@ -90,7 +99,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void updateRole() {
+    void shouldUpdateRole() {
         EmployeeResponse expectedEmployee = new EmployeeResponse();
         expectedEmployee.setUsername("jon");
         expectedEmployee.setEmail("jon@mail.ru");
@@ -106,5 +115,16 @@ class EmployeeServiceTest {
         EmployeeResponse actualEmployee = employeeService.findEmployeeById(employee2.getId());
 
         assertEquals(expectedEmployee, actualEmployee);
+    }
+
+    @Test
+    void shouldUpdateRole_whenEmployeeNoyFound() {
+        RoleUpdateRequest roleUpdateRequest = new RoleUpdateRequest(RoleEnum.ADMIN);
+
+        Mockito.when(mockEmployeeRepository.findById(employee2.getId())).thenReturn(Optional.empty());
+
+        assertThrows(EmployeeNotFound.class, () -> {
+            employeeService.updateRole(employee2.getId(), roleUpdateRequest);
+        });
     }
 }

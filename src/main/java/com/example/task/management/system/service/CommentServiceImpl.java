@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.delete(commentEntity);
     }
 
-    private CommentEntity findById(Long commentId) {
+    protected CommentEntity findById(Long commentId) {
         return commentRepository.findById(commentId).orElseThrow(CommentNotFound::new);
     }
 }

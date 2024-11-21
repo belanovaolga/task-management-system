@@ -56,24 +56,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponse updatePassword(String newPassword) {
+    public void updatePassword(String newPassword) {
         UserDetailsDto userDetailsDto = authService.getCurrentEmployeesId();
         EmployeeEntity currentEmployee = findById(userDetailsDto.getId());
         currentEmployee.setPassword(newPassword);
 
         employeeRepository.save(currentEmployee);
-
-        return employeeMapper.toEmployeeResponse(currentEmployee);
     }
 
     @Override
-    public EmployeeResponse deleteEmployee() {
+    public void deleteEmployee() {
         UserDetailsDto userDetailsDto = authService.getCurrentEmployeesId();
         EmployeeEntity currentEmployee = findById(userDetailsDto.getId());
 
         employeeRepository.delete(currentEmployee);
-
-        return employeeMapper.toEmployeeResponse(currentEmployee);
     }
 
     @Transactional

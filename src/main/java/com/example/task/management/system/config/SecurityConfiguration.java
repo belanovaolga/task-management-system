@@ -44,10 +44,11 @@ public class SecurityConfiguration {
                 }))
                 .authorizeRequests(request -> request
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/swagger-ui/index.html", "/swagger-ui**", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/employees/*/role", "/tasks", "/tasks/*", "/tasks**/delete").hasRole(RoleEnum.ADMIN.toString())
-                        .requestMatchers("/employees**", "/tasks/**/update-status", "/tasks/by-author/*", "/tasks/by-executor/*", "/tasks/all-tasks", "/comments**").hasAnyRole(RoleEnum.USER.toString(), RoleEnum.ADMIN.toString())
+                        .requestMatchers("/swagger-ui/index.html", "/swagger-ui/**", "/swagger-ui", "/swagger-resources/*", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/employees/{employee_id}/role", "/tasks/{task_id}**", "/tasks").hasRole(RoleEnum.ADMIN.toString())
+                        .requestMatchers("/employees**", "/tasks/**", "/comments**").hasAnyRole(RoleEnum.USER.toString(), RoleEnum.ADMIN.toString())
                         .anyRequest().authenticated())
+
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

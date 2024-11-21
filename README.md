@@ -23,16 +23,13 @@ Project Lombok
 
 ## Локальный запуск проекта:
 
-1. Развернуть базу данные в docker с помощью файла docker/docker-compose.yaml\
+1. Развернуть базу данных в docker с помощью файла docker/docker-compose.yaml\
    Необходимо запустить его, перейдя в сам файл или использовать команду docker-compose up -d в директории с файлом
    docker-compose.yaml
 
 ![Docker-Compose .png](src%2Fmain%2Fresources%2Fimages%2Fdocker-compose.png)
 
-2. Сгенерировать классы OpenAPI, описанные в файле openapi/openapi.yaml\
-   Для этого нужно в терминале вызвать команду ./gradlew openApiGenerate
-
-![OpenAPI .png](src%2Fmain%2Fresources%2Fimages%2Fopenapi.png)
+2. Создать базу данных "taskManagementSystem"
 
 3. Запустить приложение с помощью класса Application.class\
    В классе Application находится метод main(String[] args), который является точкой входа в приложение

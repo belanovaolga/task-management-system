@@ -6,8 +6,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface EmployeeService {
     EmployeeEntity createEmployee(SignUpRequest signUpRequest, String password);
     EmployeeResponse updateEmployee(EmployeeUpdateRequest employeeUpdateRequest);
-    EmployeeResponse updatePassword(String newPassword);
-    EmployeeResponse deleteEmployee();
+
+    void updatePassword(String newPassword);
+
+    void deleteEmployee();
     EmployeeResponse updateRole(Long employeeId, RoleUpdateRequest roleUpdateRequest);
     EmployeeEntity getCurrentEmployee();
     String getCurrentEmployeePassword();

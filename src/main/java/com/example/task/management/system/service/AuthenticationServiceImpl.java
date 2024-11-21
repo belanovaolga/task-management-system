@@ -52,11 +52,11 @@ public class AuthenticationServiceImpl implements  AuthenticationService {
 
     @Transactional
     @Override
-    public EmployeeResponse updatePassword(PasswordUpdateRequest passwordUpdateRequest) {
+    public void updatePassword(PasswordUpdateRequest passwordUpdateRequest) {
         if (passwordEncoder.matches(passwordUpdateRequest.getOldPassword(), employeeService.getCurrentEmployeePassword())) {
             String newPassword = passwordEncoder.encode(passwordUpdateRequest.getNewPassword());
 
-            return employeeService.updatePassword(newPassword);
+            employeeService.updatePassword(newPassword);
         } else {
             throw new PasswordIncorrect();
         }

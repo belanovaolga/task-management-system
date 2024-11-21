@@ -5,7 +5,6 @@ import com.example.task.management.system.model.CommentResponse;
 import com.example.task.management.system.model.NewCommentRequest;
 import com.example.task.management.system.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +21,6 @@ public class CommentController implements CommentsApi {
     @Override
     public ResponseEntity<Void> deleteComment(Long commentId) {
         commentService.deleteComment(commentId);
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        return ResponseEntity.noContent().build();
     }
 }

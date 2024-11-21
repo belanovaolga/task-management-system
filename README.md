@@ -34,6 +34,6 @@ Project Lombok
 3. Запустить приложение с помощью класса Application.class\
    В классе Application находится метод main(String[] args), который является точкой входа в приложение
 
-![Started .png](src%2Fmain%2Fresources%2Fimages%started.png)
+![Started .png](src%2Fmain%2Fresources%2Fimages%2Fstarted.png)
 
 Приложение запустилось на порту 8080

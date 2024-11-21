@@ -31,7 +31,6 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.5")
     implementation ("io.swagger.core.v3:swagger-annotations:2.2.22")
-//    implementation ("io.swagger.core.v3:swagger-core:2.2.10")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 
     implementation("javax.annotation:javax.annotation-api:1.3.2")

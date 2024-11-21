@@ -27,7 +27,6 @@ class TaskServiceTest {
     private final EmployeeEntity employee1;
     private final EmployeeEntity employee2;
     private final EmployeeEntity employee3;
-    private final List<EmployeeEntity> executors;
     private final TaskEntity task1;
     private final TaskEntity task2;
     private final Optional<TaskEntity> optionalTask;
@@ -42,7 +41,7 @@ class TaskServiceTest {
         employee2 = EmployeeEntity.builder().id(2L).username("jon").email("jon@mail.ru").password("jon").role(RoleEnum.USER).build();
         employee3 = EmployeeEntity.builder().id(3L).username("bob").email("bob@mail.ru").password("bob").role(RoleEnum.ADMIN).build();
 
-        executors = new ArrayList<>();
+        List<EmployeeEntity> executors = new ArrayList<>();
         executors.add(employee1);
         executors.add(employee2);
         task1 = TaskEntity.builder().id(1L).header("header").description("come up with a header").status(StatusEnum.PENDING).priority(PriorityEnum.MEDIUM).author(employee2).executors(executors).build();

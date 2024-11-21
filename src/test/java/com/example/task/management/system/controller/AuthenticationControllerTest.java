@@ -34,19 +34,12 @@ class AuthenticationControllerTest {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     @Autowired
     private JwtService jwtService;
-    private final EmployeeResponse employeeResponse1;
     private final PasswordUpdateRequest passwordUpdateRequest;
     private final SignInRequest signInRequest;
     private final SignUpRequest signUpRequest;
     private String token;
 
     public AuthenticationControllerTest() {
-        employeeResponse1 = new EmployeeResponse();
-        employeeResponse1.setId(1L);
-        employeeResponse1.setUsername("user");
-        employeeResponse1.setEmail("user@mail.ru");
-        employeeResponse1.setRole(RoleEnum.USER);
-
         signUpRequest = new SignUpRequest();
         signUpRequest.setUsername("user");
         signUpRequest.setEmail("user@mail.ru");

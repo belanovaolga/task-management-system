@@ -7,10 +7,7 @@ public interface TaskService {
     TaskResponse updateTask(Long taskId, TaskUpdateRequest taskUpdateRequest);
     TaskResponse updateStatus(Long taskId, StatusUpdateRequest statusUpdateRequest);
     void deleteTask(Long taskId);
-
     TasksListResponse findTasksByAuthor(Long authorId, Integer page);
-
     TasksListResponse findTasksByExecutor(Long executorId, Integer page);
-
     TasksListResponse findAllTasks(Integer page);
 }

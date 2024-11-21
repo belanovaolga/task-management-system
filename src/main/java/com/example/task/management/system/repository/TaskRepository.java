@@ -10,6 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
     Page<TaskEntity> findAllByAuthor(EmployeeEntity employeeEntity, Pageable pageable);
-
     Page<TaskEntity> findAllByExecutors(EmployeeEntity employeeEntity, Pageable pageable);
 }

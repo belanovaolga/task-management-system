@@ -8,6 +8,5 @@ import com.example.task.management.system.model.SignUpRequest;
 public interface AuthenticationService {
     JwtAuthenticationResponse signUp(SignUpRequest signUpRequest);
     JwtAuthenticationResponse signIn(SignInRequest signInRequest);
-
     void updatePassword(PasswordUpdateRequest passwordUpdateRequest);
 }
